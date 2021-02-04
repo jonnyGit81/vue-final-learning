@@ -13,13 +13,22 @@
 <script>
 import Header from "./components/Header";
 import * as typesStocks from "./store/modules/stocks/types";
+import * as typesAuth from "./store/modules/auth/types";
 
 export default {
   components: {
     appHeader: Header,
   },
+  methods: {
+    initApp() {
+      this.$store.dispatch(typesAuth.ACTIONS.RESUME_USER_ACTION);
+      if (this.$store.getters[typesAuth.GETTERS.IS_AUTHENTICATED]) {
+        this.$store.dispatch(typesStocks.ACTIONS.INIT_STOCKS_ACTION);
+      }
+    },
+  },
   created() {
-    this.$store.dispatch(typesStocks.ACTIONS.INIT_STOCKS_ACTION);
+    this.initApp();
   },
 };
 </script>
